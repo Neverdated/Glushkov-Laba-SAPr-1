@@ -15,7 +15,7 @@ module random_accsess_memory
 
 	integer i;
 
-	always @(posedge clock)
+	always @(negedge clock)
 	begin
 		if(read)
 			for( i = 0; i < 6; i = i + 1 )
