@@ -206,7 +206,7 @@ always @(posedge pclk)
 						8'hb:
 							prdata[31:0] <= first_name_4[31:0];
 						
-						8'hc: begin
+						8'hc:
 							// чтение из регистра со смещением 12
 							prdata[31:0] <= last_name_1[31:0];
 						
@@ -218,8 +218,6 @@ always @(posedge pclk)
 						
 						8'hf:
 							prdata[31:0] <= last_name_4[31:0];
-						end
-						
 
 						default:
 
