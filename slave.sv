@@ -16,7 +16,19 @@ module apb_slave
 );
 
 
-logic [31:0] register_with_some_name;
+logic [31:0] number_in_group;
+logic [31:0] date_day;
+logic [31:0] date_month;
+logic [31:0] date_year_high;
+logic [31:0] date_year_low;
+logic [31:0] first_name_1;
+logic [31:0] first_name_2;
+logic [31:0] first_name_3;
+logic [31:0] first_name_4;
+logic [31:0] last_name_1;
+logic [31:0] last_name_2;
+logic [31:0] last_name_3;
+logic [31:0] last_name_4;
 
 
 //APB FSM
@@ -38,7 +50,7 @@ always @(posedge pclk)
 		prdata <= '0;
 		pslverr <= 1'b0;
 		pready <= 1'b0;
-		register_with_some_name <= 32'h0;
+		number_in_group <= 32'h0;
 		apb_st <= APB_SETUP;
 
 	end
@@ -86,24 +98,57 @@ always @(posedge pclk)
 					
 						8'h0: begin
 							// запись в регистр со смещением 0
-							register_with_some_name <= pwdata;
+							number_in_group <= pwdata;
 							// и/или обработка записи в регистр для выполнения каких-либо действий (может быть здесь или за пределами FSM APB)
 							// if (pwdata[.....] == ..... )
 							// begin
 							// ......
 							// end
 						end
+							
 						8'h4: begin
 							// запись в регистр со смещением 4
-							register_with_some_name <= pwdata;
+							date_day <= pwdata;
 						end
+						
+						8'h5:
+							date_month <= pwdata;
+							
+						8'h6:
+							date_year_high <= pwdata;
+							
+						8'h7:
+							date_year_low <= pwdata;
+						
 						8'h8: begin
 							// запись в регистр со смещением 8
-							register_with_some_name <= pwdata;
+							first_name_1 <= pwdata;
 						end
+						
+						8'h9:
+							first_name_2 <= pwdata;
+						
+						8'ha:
+							first_name_3 <= pwdata;
+						
+						8'hb:
+							first_name_4 <= pwdata;
+						
 						8'hc:
 							//смещение 12
-							register_with_some_name <= pwdata;
+							last_name_1 <= pwdata;
+							
+						8'hd:
+							last_name_2 <= pwdata;
+							
+						8'he:
+							last_name_3 <= pwdata;
+							
+						8'hf:
+							last_name_4 <= pwdata;
+							
+						
+							
 						default:
 						begin
 							pslverr <= 1'b1;
@@ -129,31 +174,50 @@ always @(posedge pclk)
 					case (paddr[7:0])
 
 						8'h0: begin
-
 							// чтение из регистра со смещением 0
-							prdata[31:0] <= register_with_some_name[31:0];
-
+							prdata[31:0] <= number_in_group[31:0];
 						end
 
 						8'h4: begin
-
-							// запись из регистра со смещением 4
-							prdata[31:0] <= register_with_some_name[31:0];
-
+							// чтение из регистра со смещением 4
+							prdata[31:0] <= date_day[31:0];
 						end
+						
+						8'h5:
+							prdata[31:0] <= date_month[31:0];
+						
+						8'h6:
+							prdata[31:0] <= date_year_high[31:0];
+						
+						8'h7:
+							prdata[31:0] <= date_year_low[31:0];
 
 						8'h8: begin
-
-							// запись из регистра со смещением 8
-							prdata[31:0] <= register_with_some_name[31:0];
-
+							// чтение из регистра со смещением 8
+							prdata[31:0] <= first_name_1[31:0];
 						end
 						
+						8'h9:
+							prdata[31:0] <= first_name_2[31:0];
+						
+						8'ha:
+							prdata[31:0] <= first_name_3[31:0];
+						
+						8'hb:
+							prdata[31:0] <= first_name_4[31:0];
+						
 						8'hc: begin
+							// чтение из регистра со смещением 12
+							prdata[31:0] <= last_name_1[31:0];
 						
-							// запись из регистра со смещением 12
-							prdata[31:0] <= register_with_some_name[31:0];
+						8'hd:
+							prdata[31:0] <= last_name_2[31:0];
 						
+						8'he:
+							prdata[31:0] <= last_name_3[31:0];
+						
+						8'hf:
+							prdata[31:0] <= last_name_4[31:0];
 						end
 						
 
@@ -183,14 +247,14 @@ always @(posedge pclk)
 
 		// можем выполнить какие-то действия здесь
 		//if (penable==1'b0)
-		/* if (register_with_some_name[0] == 1'b0)
+		/* if (number_in_group[0] == 1'b0)
 		begin
-			register_with_some_name <= 32'hAAAA_AAAA;
+			number_in_group <= 32'hAAAA_AAAA;
 		end
 
 		else
 		begin
-			register_with_some_name <= 32'h5555_5555;
+			number_in_group <= 32'h5555_5555;
 		end */
 
 	end //не reset
