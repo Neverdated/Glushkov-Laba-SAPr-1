@@ -95,10 +95,15 @@ always @(posedge pclk)
 						end
 						8'h4: begin
 							// запись в регистр со смещением 4
+							register_with_some_name <= pwdata;
 						end
 						8'h8: begin
 							// запись в регистр со смещением 8
+							register_with_some_name <= pwdata;
 						end
+						8'hc:
+							//смещение 12
+							register_with_some_name <= pwdata;
 						default:
 						begin
 							pslverr <= 1'b1;
@@ -133,14 +138,24 @@ always @(posedge pclk)
 						8'h4: begin
 
 							// запись из регистра со смещением 4
+							prdata[31:0] <= register_with_some_name[31:0];
 
 						end
 
 						8'h8: begin
 
 							// запись из регистра со смещением 8
+							prdata[31:0] <= register_with_some_name[31:0];
 
 						end
+						
+						8'hc: begin
+						
+							// запись из регистра со смещением 12
+							prdata[31:0] <= register_with_some_name[31:0];
+						
+						end
+						
 
 						default:
 
@@ -168,7 +183,7 @@ always @(posedge pclk)
 
 		// можем выполнить какие-то действия здесь
 		//if (penable==1'b0)
-		if (register_with_some_name[0] == 1'b0)
+		/* if (register_with_some_name[0] == 1'b0)
 		begin
 			register_with_some_name <= 32'hAAAA_AAAA;
 		end
@@ -176,8 +191,8 @@ always @(posedge pclk)
 		else
 		begin
 			register_with_some_name <= 32'h5555_5555;
-		end
+		end */
 
-	end // закончился блок внутри always
+	end //не reset
 
 endmodule
