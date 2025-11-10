@@ -41,7 +41,6 @@ always @(posedge pclk)
 		prdata <= '0;
 		pslverr <= 1'b0;
 		pready <= 1'b0;
-		number_in_group <= 32'h0;
 		apb_st <= APB_SETUP;
 
 	end
@@ -61,16 +60,7 @@ always @(posedge pclk)
 				// Move to ENABLE when the psel is asserted
 				if (psel && !penable)
 				begin
-
-					if (pwrite == 1'b1)
-					begin
-						apb_st <= APB_W_ENABLE;
-					end
-
-					else
-					begin
-						apb_st <= APB_R_ENABLE;
-					end
+					apb_st <= APB_R_ENABLE;
 
 				end
 			end: apb_setup_st

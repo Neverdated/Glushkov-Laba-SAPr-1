@@ -54,7 +54,6 @@ task apb_read(input [31:0] addr, output logic [31:0] data);
 	@(posedge pclk);
 
 	psel <= 1'b1;
-	pwrite <= 1'b0;
 	paddr[31:0] <= addr[31:0];
 
 	@(posedge pclk);
@@ -86,7 +85,6 @@ begin
 
 	psel='0;
 	penable='0;
-	pwrite='0;
 	paddr='0;
 	//pwdata='0;
 
