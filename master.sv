@@ -118,13 +118,13 @@ begin
 	data_to_device = {"a", "p", "h", "a"};
 	apb_write(address, data_to_device);
 	apb_read(address, data_from_device);
-	$display("Addr= 0x%h, write data %c, read data %s", address, data_to_device, data_from_device);
+	$display("Addr= 0x%h, write data '%s', read data '%s'", address, data_to_device, data_from_device);
 	
 	address = p_device_offset+8'hc;
 	data_to_device = {"g", "l", "u", "s"};
 	apb_write(address, data_to_device);
 	apb_read(address, data_from_device);
-	$display("Addr= 0x%h, write data %c, read data %s", address, data_to_device, data_from_device);
+	$display("Addr= 0x%h, write data '%s', read data '%s'", address, data_to_device, data_from_device);
 
 	repeat (15) @(posedge pclk);
 	$stop();
