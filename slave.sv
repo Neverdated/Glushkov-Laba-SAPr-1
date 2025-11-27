@@ -17,18 +17,9 @@ module apb_slave
 
 
 logic [31:0] number_in_group;
-logic [31:0] date_day;
-logic [31:0] date_month;
-logic [31:0] date_year_high;
-logic [31:0] date_year_low;
-logic [31:0] first_name_1;
-logic [31:0] first_name_2;
-logic [31:0] first_name_3;
-logic [31:0] first_name_4;
-logic [31:0] last_name_1;
-logic [31:0] last_name_2;
-logic [31:0] last_name_3;
-logic [31:0] last_name_4;
+logic [31:0] date;
+logic [31:0] first_name;
+logic [31:0] last_name;
 
 
 //APB FSM
@@ -108,44 +99,17 @@ always @(posedge pclk)
 							
 						8'h4: begin
 							// запись в регистр со смещением 4
-							date_day <= pwdata;
+							date <= pwdata;
 						end
-						
-						8'h5:
-							date_month <= pwdata;
-							
-						8'h6:
-							date_year_high <= pwdata;
-							
-						8'h7:
-							date_year_low <= pwdata;
 						
 						8'h8: begin
 							// запись в регистр со смещением 8
-							first_name_1 <= pwdata;
+							first_name <= pwdata;
 						end
-						
-						8'h9:
-							first_name_2 <= pwdata;
-						
-						8'ha:
-							first_name_3 <= pwdata;
-						
-						8'hb:
-							first_name_4 <= pwdata;
 						
 						8'hc:
 							//смещение 12
-							last_name_1 <= pwdata;
-							
-						8'hd:
-							last_name_2 <= pwdata;
-							
-						8'he:
-							last_name_3 <= pwdata;
-							
-						8'hf:
-							last_name_4 <= pwdata;
+							last_name <= pwdata;
 							
 						
 							
@@ -180,44 +144,17 @@ always @(posedge pclk)
 
 						8'h4: begin
 							// чтение из регистра со смещением 4
-							prdata[31:0] <= date_day[31:0];
+							prdata[31:0] <= date[31:0];
 						end
-						
-						8'h5:
-							prdata[31:0] <= date_month[31:0];
-						
-						8'h6:
-							prdata[31:0] <= date_year_high[31:0];
-						
-						8'h7:
-							prdata[31:0] <= date_year_low[31:0];
 
 						8'h8: begin
 							// чтение из регистра со смещением 8
-							prdata[31:0] <= first_name_1[31:0];
+							prdata[31:0] <= first_name[31:0];
 						end
-						
-						8'h9:
-							prdata[31:0] <= first_name_2[31:0];
-						
-						8'ha:
-							prdata[31:0] <= first_name_3[31:0];
-						
-						8'hb:
-							prdata[31:0] <= first_name_4[31:0];
 						
 						8'hc:
 							// чтение из регистра со смещением 12
-							prdata[31:0] <= last_name_1[31:0];
-						
-						8'hd:
-							prdata[31:0] <= last_name_2[31:0];
-						
-						8'he:
-							prdata[31:0] <= last_name_3[31:0];
-						
-						8'hf:
-							prdata[31:0] <= last_name_4[31:0];
+							prdata[31:0] <= last_name[31:0];
 
 						default:
 
